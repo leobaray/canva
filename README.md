@@ -1,35 +1,61 @@
-# canvas
+# canva
 
-uma ferramenta visual pra mapear arquitetura de sistemas. a ideia é parecida com o n8n mas o foco é diferente — quero conseguir organizar visualmente como os sistemas de um ambiente se conectam, sem precisar de planilha ou draw.io.
+Editor visual node-based para mapear a arquitetura de sistemas — organização visual de como os sistemas de um ambiente se conectam, sem precisar de planilha ou draw.io.
 
-ainda tá no começo mas já dá pra usar.
+## Visão geral
 
-## o que tem até agora
+Ferramenta visual para criar diagramas de arquitetura de forma interativa. Cada node representa um sistema (API, banco de dados, fila, serviço) com categoria e status, e as conexões mostram as relações entre eles. Tudo é salvo no `localStorage` — não perde nada ao recarregar.
 
-- canvas com zoom e pan (botão do scroll pra arrastar, scroll pra zoom)
-- nodes representando sistemas, com categoria e status
-- conexões entre nodes arrastando de um handle pra outro
-- botão direito no canvas pra adicionar sistema ou nota
-- botão direito no node pra editar ou deletar
-- notas adesivas colapsáveis direto no canvas
-- seleção de área com botão esquerdo
-- tudo salvo no localStorage, não perde nada ao recarregar
+## Funcionalidades
 
-## rodando
+- **Canvas interativo** com zoom e pan (botão do scroll para arrastar, scroll para zoom)
+- **Nodes** representando sistemas com categoria (API, Banco de Dados, Fila, Serviço, Outro) e status (Ativo, Inativo, Desconhecido)
+- **Conexões** entre nodes arrastando de um handle para outro
+- **Menu de contexto** (botão direito) no canvas para adicionar sistema ou nota adesiva
+- **Menu de contexto** (botão direito) no node para editar ou deletar
+- **Notas adesivas** colapsáveis diretamente no canvas
+- **Seleção de área** com botão esquerdo
+- **Snap-to-grid** (16px) para alinhamento automático
+- **Persistência local** via `localStorage`
+
+## Stack
+
+- React 19 + Vite
+- React Flow (`@xyflow/react`) — engine do canvas
+- Tailwind CSS v4
+- Zustand — state management
+- Lucide React — ícones
+
+## Rodando
 
 ```bash
 npm install
 npm run dev
 ```
 
-abre em `http://localhost:5173`
+Abre em `http://localhost:5173`
 
-## stack
+## Estrutura
 
-- React + Vite
-- React Flow (@xyflow/react)
-- Tailwind CSS v4
+```
+src/
+├── App.jsx                    # Provider raiz (ReactFlowProvider)
+├── main.jsx                   # Entry point
+├── components/
+│   ├── Canvas.jsx             # Canvas principal + context menu
+│   ├── SystemNode.jsx         # Node de sistema (categoria + status)
+│   ├── SystemEdge.jsx         # Edge estilizada
+│   ├── NodeModal.jsx          # Modal de edição de node
+│   ├── StickyNote.jsx         # Nota adesiva colapsável
+│   ├── TextCard.jsx           # Card de texto
+│   ├── ContextMenu.jsx        # Menu de contexto (botão direito)
+│   └── GuideLines.jsx         # Linhas guia de alinhamento
+├── store/
+│   └── useCanvasStore.js      # Store Zustand (nodes, edges, localStorage)
+└── utils/
+    └── smartPath.js           # Cálculo de caminhos de edges
+```
 
-## próximos passos
+## Licença
 
-ainda tem muita coisa que quero adicionar. isso aqui é só a base visual.
+[MIT](LICENSE)
